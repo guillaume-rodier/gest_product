@@ -1,0 +1,30 @@
+[
+  {
+    "uuid": "03125012-cafe-f4ce-b00k-b00bs10ff1c3",
+    "name": "Macbook Pro 13’’",
+    "price": 1.99,
+    "type": "computer",
+    "enabled": true
+  },
+  {
+    "uuid": "04675012-coff-f3ce-b00k-b00bs10ff1c3",
+    "name": "Macbook Pro 15’’",
+    "price": 1.99,
+    "type": "computer",
+    "enabled": true
+  },
+  {
+    "uuid": "03125012-ghje-f2ne-b00k-b00bs10ff1c3",
+    "name": "Macbook Pro 17’’",
+    "price": 1.99,
+    "type": "computer",
+    "enabled": true
+  },
+  {
+    "uuid": "32209012-gbnu-c2ce-a02k-b00b234ff1c3",
+    "name": "test put",
+    "price": 3.098,
+    "type": "New typ",
+    "enabled": true
+  }
+]
