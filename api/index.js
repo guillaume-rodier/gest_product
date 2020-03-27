@@ -2,36 +2,23 @@
 // La variable express nous permettra d'utiliser les fonctionnalités du module Express.
 const express = require('express'),
       fs = require('fs'),
-      bdd_name = "bdd.json",
-      bodyParser = require("body-parser");
+      bodyParser = require('body-parser'),
+      product = require('./product'),
+      bdd = require('./bdd.js'),
+      hostname = 'localhost',
+      port = 3000,
+      app = express();
 
-// Nous définissons ici les paramètres du serveur.
-var hostname = 'localhost';
-var port = 3000;
-
-var app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+var infoBDD = new bdd();
 
 // Afin de faciliter le routage (les URL que nous souhaitons prendre en charge dans notre API), nous créons un objet Router.
 // C'est à partir de cet objet myRouter, que nous allons implémenter les méthodes.
 var myRouter = express.Router();
 
-// Recevoir les données du fichier
-function getbdd() {
-    return JSON.parse(fs.readFileSync(bdd_name,'utf8'));
-}
+app.use(bodyParser.urlencoded({ extended: false }))
+  .use(bodyParser.json());
 
-// Insertion en base de données
-function insertbdd(data) {
-    var json = JSON.stringify(data, null, 2);
 
-    fs.writeFile ("bdd.json", json, function(err) {
-        if (err) throw err;
-            console.log('Merge completed and writed in bdd.json');
-        }
-    );
-}
 
 myRouter.route('/')
 // all permet de prendre en charge toutes les méthodes.
@@ -49,15 +36,12 @@ myRouter.route('/products')
 // J'implémente les méthodes GET, PUT, UPDATE et DELETE
 // GET
 .get(function(req,res){
-    // On récupère les données du fichier json
-    var data = getbdd();
-
     // On envoie en JSON plusieurs paramètres
     res.json(
         {
-            message : "Liste touts les produits disponibles.",
+            message : "Liste tous les produits disponibles.",
             methode : req.method,
-            data: data
+            data: infoBDD.getbdd()
         }
     );
 });
@@ -65,7 +49,7 @@ myRouter.route('/products')
 myRouter.route('/product/:product_id')
 .get(function(req,res){
     // On récupère les données du fichier json
-    var data = getbdd();
+    var data = infoBDD.getbdd();
 
     // On récupère l'objet
     var myObject = data.find(product => product.uuid === req.params.product_id);
@@ -82,7 +66,7 @@ myRouter.route('/product/:product_id')
 })
 .post(function(req,res){
     // On récupère les données du fichier json
-    var data = getbdd();
+    var data = infoBDD.getbdd();
 
     // Message de base
     var message = "Vous souhaitez créer le produit n°" + req.params.product_id + ".";
@@ -103,7 +87,7 @@ myRouter.route('/product/:product_id')
       // On insère le produit dans le tableau
       data.push(bodyObject);
       // On écrit les données dans le fichier
-      insertbdd(data);
+      bdd.infoBDD(data);
     }
 
     // On envoie en JSON plusieurs paramètres
@@ -117,7 +101,7 @@ myRouter.route('/product/:product_id')
 })
 .put(function(req,res){
     // On récupère les données du fichier json
-    var data = getbdd();
+    var data = infoBDD.getbdd();
 
     // On cherche le produit dans la base de données
     data.forEach(
@@ -133,7 +117,7 @@ myRouter.route('/product/:product_id')
     );
 
     // On écrit les données dans la base de données
-    insertbdd(data);
+    bdd.infoBDD(data);
 
     // On envoie en JSON plusieurs paramètres
     res.json(
@@ -146,7 +130,7 @@ myRouter.route('/product/:product_id')
 })
 .delete(function(req,res){
     // On récupère les données du fichier json
-    var data = getbdd();
+    var data = infoBDD.getbdd();
     data.remove(data.find(product => product.uuid === req.params.product_id));
 
     // On envoie en JSON plusieurs paramètres
