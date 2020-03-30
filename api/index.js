@@ -132,14 +132,19 @@ myRouter.route('/product/:product_id')
 .delete(function(req,res){
     // On récupère les données du fichier json
     var data = infoBDD.getbdd();
-    data.remove(data.find(product => product.uuid === req.params.product_id));
+    // data.remove(data.find(product => product.uuid === req.params.product_id));
+
+    var filtered = data.filter(function(element) { return element.uuid != req.params.product_id; });
+
+    // On écrit les données dans la base de données
+    infoBDD.insertbdd(filtered);
 
     // On envoie en JSON plusieurs paramètres
     res.json(
         {
             message : "Vous souhaitez supprimer le produit n°" + req.params.product_id,
             methode : req.method,
-            data : data
+            data : filtered
         }
     );
 });
