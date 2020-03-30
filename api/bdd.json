@@ -8,9 +8,9 @@
   },
   {
     "uuid": "04675012-coff-f3ce-b00k-b00bs10ff1c3",
-    "name": "Macbook Pro 15’’",
-    "price": 1.99,
-    "type": "computer",
+    "name": "my update",
+    "price": 1.098,
+    "type": "ordi",
     "enabled": true
   },
   {
@@ -25,6 +25,13 @@
     "name": "test put",
     "price": 3.098,
     "type": "New typ",
+    "enabled": true
+  },
+  {
+    "uuid": "32209012-azert-c2ce-a02k-b00b234ff1c3",
+    "name": "Ipad",
+    "price": 2.122,
+    "type": "yolo",
     "enabled": true
   }
 ]

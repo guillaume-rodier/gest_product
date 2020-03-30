@@ -9,16 +9,17 @@ const express = require('express'),
       port = 3000,
       app = express();
 
+// Création d'un nouvel objet pour la base de données
 var infoBDD = new bdd();
 
 // Afin de faciliter le routage (les URL que nous souhaitons prendre en charge dans notre API), nous créons un objet Router.
 // C'est à partir de cet objet myRouter, que nous allons implémenter les méthodes.
 var myRouter = express.Router();
 
-app.use(bodyParser.urlencoded({ extended: false }))
+// Paramétrage de l'app
+app
+  .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json());
-
-
 
 myRouter.route('/')
 // all permet de prendre en charge toutes les méthodes.
@@ -87,7 +88,7 @@ myRouter.route('/product/:product_id')
       // On insère le produit dans le tableau
       data.push(bodyObject);
       // On écrit les données dans le fichier
-      bdd.infoBDD(data);
+      infoBDD.insertbdd(data);
     }
 
     // On envoie en JSON plusieurs paramètres
@@ -117,7 +118,7 @@ myRouter.route('/product/:product_id')
     );
 
     // On écrit les données dans la base de données
-    bdd.infoBDD(data);
+    infoBDD.insertbdd(data);
 
     // On envoie en JSON plusieurs paramètres
     res.json(
